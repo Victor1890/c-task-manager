@@ -1,4 +1,4 @@
-todo-cli-c — Console Todo List in C
+c-task-manager — Console Todo List in C
 ------------------------------------------------------------
 
 Short Description
