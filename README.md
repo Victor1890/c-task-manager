@@ -49,12 +49,12 @@ Prerequisites: Install GCC (e.g., via MinGW). Ensure gcc is available in your PA
 Steps:
 1) Open PowerShell in the project folder.
 2) Compile the program:
-	```
-	gcc -std=c11 -Wall -Wextra -pedantic -O2 -o todo-cli src\main.c
+	```bash
+	scripts/build.ps1
 	```
 3) Run the program:
-	```
-	.\todo-cli.exe
+	```bash
+	scripts/run.ps1
 	```
 
 Example Terminal Menu
