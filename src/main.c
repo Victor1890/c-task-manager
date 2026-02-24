@@ -14,10 +14,34 @@ typedef struct {
 
 Task** tasks = NULL;
 int task_count = 0;
-int capacity = 0;
+int task_capacity = 0;
 int next_id = 1;
 
+void initialize_task_list() {
+    task_capacity = INITIAL_CAPACITY;
+    tasks = (Task*)malloc(sizeof(Task) * task_capacity);
+
+    if(tasks == NULL) {
+        printf("Error failed to allocate memory! bad!");
+        exit(EXIT_FAILURE);
+    }
+
+    task_count = 0;
+    next_id = 1;
+}
+
+void free_task_list() {
+    if(tasks != NULL) {
+        free(tasks);
+        tasks = NULL;
+    }
+
+    task_count = 0;
+}
+
 int main() {
+
+    initialize_task_list();
 
     int choice;
 
@@ -51,6 +75,8 @@ int main() {
         }
 
     } while(choice != 6);
+
+    free_task_list();
 
     return 0;
 }
