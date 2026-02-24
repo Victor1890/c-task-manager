@@ -1,56 +1,56 @@
 #include <stdio.h>
-#include "view.h"
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
 
-int main(void)
-{
-    view_print_menu();
+#define MAX_DESCRIPTION_LENGTH 256
+#define INITIAL_CAPACITY 10
 
-    int option;
-    scanf("%d", &option);
+typedef struct {
+    int id;
+    char description[MAX_DESCRIPTION_LENGTH];
+    bool completed;
+} Task;
 
-    view_clean_screen();
+Task** tasks = NULL;
+int task_count = 0;
+int capacity = 0;
+int next_id = 1;
 
-    switch (option)
-    {
-        case 1:
-            printf("Add new task selected.\n");
-            break;
-        
-        case 2:
-            printf("View all tasks selected.\n");
-            break;
+int main() {
 
-        case 3:
-            printf("View pending tasks selected.\n");
-            break;
+    int choice;
 
-        case 4:
-            printf("View completed tasks selected.\n");
-            break;
-        
-        case 5:
-            printf("Mark task as completed selected.\n");
-            break;
+    do {
+        printf("\nTo-Do List Application\n");
+        printf("1. Add Task\n");
+        printf("2. View Tasks\n");
+        printf("3. Mark Task as Completed\n");
+        printf("4. Delete Task\n");
+        printf("5. Save Task in Disk\n");
+        printf("6. Exit\n");
+        printf("Enter your choice: ");
 
+        if(scanf("%d", &choice) != 1) {
+            printf("Invalid input. Please enter a number. \n");
+            while(getchar() != '\n'); 
+            continue;
+        }
+
+        while(getchar() != '\n');
+
+        switch (choice)
+        {
         case 6:
-            printf("Edit task selected.\n");
-            break;
-
-        case 7:
-            printf("Delete task selected.\n");
-            break;
-        
-        case 8:
-            printf("Save tasks selected.\n");
-            break;
-
-        case 0:
-            printf("Exiting the program.\n");
+            printf("Exiting application.");
             break;
         
         default:
+            printf("Invalid choice");
             break;
-    }
+        }
+
+    } while(choice != 6);
 
     return 0;
 }
