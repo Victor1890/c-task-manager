@@ -74,6 +74,27 @@ void add_task(const char* desc) {
     );
 }
 
+void view_task() {
+    if(task_count == 0) {
+        printf("The task list is empty \n");
+        return;
+    }
+
+    printf("\n--- Current Task Items (%d items) ---\n", task_count);
+
+    for(int i = 0; i < task_count; i++) {
+        printf(
+            "ID: %-4d | Status: %-8s | Description: %s\n",
+            tasks[i].id,
+            tasks[i].completed ? "COMPLETE" : "PENDING",
+            tasks[i].description
+        );
+    }
+
+    printf("---------------------------------------------\n");
+
+}
+
 int main() {
 
     initialize_task_list();
@@ -102,12 +123,15 @@ int main() {
 
         switch (choice)
         {
-            case 1:
+        case 1:
             printf("Enter the new todo description: ");
             fgets(temp_desc, sizeof(temp_desc), stdin);
             temp_desc[strcspn(temp_desc, "\n")];
 
             add_task(temp_desc);
+            break;
+        case 2:
+            view_task();
             break;
         case 6:
             printf("Exiting application.");
