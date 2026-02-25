@@ -92,7 +92,23 @@ void view_task() {
     }
 
     printf("---------------------------------------------\n");
+}
 
+void complete_task(const int task_id) {
+    for(int i = 0; i < task_count; i++) {
+        if(tasks[i].id == task_id) {
+            if(tasks[i].completed) {
+                printf("Info: Task ID %d is already complete \n", task_id);
+            } else {
+                tasks[i].completed = true;
+                printf("Success: Task ID %d marked as COMPLETE \n", task_id);
+            }
+
+            return;
+        }
+    }
+
+    printf("Error: Todo with ID %d not found \n", task_id);
 }
 
 int main() {
@@ -100,6 +116,7 @@ int main() {
     initialize_task_list();
 
     char temp_desc[MAX_DESCRIPTION_LENGTH];
+    int temp_id;
 
     int choice;
 
@@ -132,6 +149,17 @@ int main() {
             break;
         case 2:
             view_task();
+            break;
+        case 3:
+            printf("Enter the ID of task to mark as completed: ");
+            if(scanf("%d", &temp_id) != 1) {
+                printf("Invalid input. Please enter a number.\n");
+                while (getchar() != '\n');
+                continue;
+            }
+
+            while (getchar() != '\n');
+            complete_task(temp_id);
             break;
         case 6:
             printf("Exiting application.");
