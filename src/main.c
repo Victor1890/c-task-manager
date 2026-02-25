@@ -4,7 +4,7 @@
 #include <stdbool.h>
 
 #define MAX_DESCRIPTION_LENGTH 256
-#define INITIAL_CAPACITY 10
+#define INITIAL_CAPACITY 2
 
 typedef struct {
     int id;
@@ -12,7 +12,7 @@ typedef struct {
     bool completed;
 } Task;
 
-Task** tasks = NULL;
+Task* tasks = NULL;
 int task_count = 0;
 int task_capacity = 0;
 int next_id = 1;
@@ -39,9 +39,46 @@ void free_task_list() {
     task_count = 0;
 }
 
+void ensure_capacity() {
+    if(task_count >= task_capacity) {
+        task_capacity *= 2;
+        Task *temp = (Task*)realloc(tasks, sizeof(Task) * task_capacity);
+        if(temp == NULL) {
+            printf("Error: failed to reallocate memory!\n");
+            exit(EXIT_FAILURE);
+        }
+
+        tasks = temp;
+        printf("Info: resized task list to %d capacity \n", task_capacity);
+    }
+}
+
+void add_task(const char* desc) {
+    if(strlen(desc) == 0) {
+        printf("Error: description cannot be empty \n");
+        return;
+    }
+
+    ensure_capacity();
+
+    tasks[task_count].id = next_id++;
+    strcpy(tasks[task_count].description, desc);
+    tasks[task_count].completed = false;
+
+    task_count++;
+
+    printf(
+        "Success: Task added: ID %d - \"%s\"\n",
+        tasks[task_count - 1].id,
+        tasks[task_count - 1].description
+    );
+}
+
 int main() {
 
     initialize_task_list();
+
+    char temp_desc[MAX_DESCRIPTION_LENGTH];
 
     int choice;
 
@@ -65,6 +102,13 @@ int main() {
 
         switch (choice)
         {
+            case 1:
+            printf("Enter the new todo description: ");
+            fgets(temp_desc, sizeof(temp_desc), stdin);
+            temp_desc[strcspn(temp_desc, "\n")];
+
+            add_task(temp_desc);
+            break;
         case 6:
             printf("Exiting application.");
             break;

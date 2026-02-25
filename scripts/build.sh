@@ -5,7 +5,7 @@ set -e  # Exit immediately if a command exits with a non-zero status
 # Determine directories based on this script's location
 RootDir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/.."
 SrcDir="$RootDir/src"
-OutExe="$RootDir/main"
+OutExe="$RootDir/main.o"
 
 # Detect available C compiler: prefer cc, then gcc, then clang
 CcCmd=""
