@@ -42,6 +42,8 @@ void free_task_list() {
     }
 
     task_count = 0;
+
+    printf("[System]: cleaning all about memory!\n");
 }
 
 void ensure_capacity() {
@@ -150,6 +152,26 @@ void delete_task(int task_id) {
 
     task_count--;
 
-    printf("Success: The Task %d was eliminated. \n");
+    printf("Success: The Task %d was eliminated. \n", task_id);
+
+}
+
+void save_task_storage(const char* filename) {
+
+    FILE* file = fopen(filename, "w");
+    if(file == NULL) {
+        printf("Error: couldn't opne file for writing");
+        return;
+    }
+
+    for(int i = 0; i < task_count; i++) {
+        fprintf(file, "%d,%d,%s\n",
+            tasks[i].id,
+            tasks[i].completed ? 1 : 0,
+            tasks[i].description
+        );
+    }
+
+    fclose(file);
 
 }

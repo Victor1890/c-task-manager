@@ -8,6 +8,8 @@ int main() {
 
     initialize_task_list((int)INITIAL_CAPACITY);
 
+    save_task_storage("todo_task.txt");
+
     char temp_desc[MAX_DESCRIPTION_LENGTH];
     int temp_id;
 

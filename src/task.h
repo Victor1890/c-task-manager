@@ -12,3 +12,5 @@ void view_list_task();
 void complete_task(int);
 
 void delete_task(int);
+
+void save_task_storage(const char*);
