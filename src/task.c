@@ -128,3 +128,28 @@ void complete_task(int task_id) {
     printf("Error: Todo with ID %d not found. \n", task_id);
 
 }
+
+void delete_task(int task_id) {
+    int found_index = -1;
+    
+    for(int i = 0; i < task_count; i++) {
+        if(tasks[i].id == task_id) {
+            found_index = i;
+            break;
+        }
+    }
+
+    if(found_index == -1) {
+        printf("Error: Cannot found the task ID %d for delete. \n", task_id);
+        return;
+    }
+
+    for(int i = found_index; i < task_count; i++) {
+        tasks[i] = tasks[i + 1];
+    }
+
+    task_count--;
+
+    printf("Success: The Task %d was eliminated. \n");
+
+}

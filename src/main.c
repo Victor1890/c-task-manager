@@ -54,6 +54,17 @@ int main() {
             while (getchar() != '\n');
             complete_task(temp_id);
             break;
+        case 4:
+            printf("Enter the ID of task to delete: ");
+            if(scanf("%d", &temp_id) != 1) {
+                printf("Invalid input. Please enter a number.\n");
+                while (getchar() != '\n');
+                continue;
+            }
+
+            while (getchar() != '\n');
+            delete_task(temp_id);
+            break;
         case 6:
             printf("Exiting application.");
             break;

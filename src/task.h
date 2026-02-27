@@ -10,3 +10,5 @@ void add_new_task(const char*);
 void view_list_task();
 
 void complete_task(int);
+
+void delete_task(int);
