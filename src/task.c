@@ -99,7 +99,7 @@ void view_list_task() {
         Task task = tasks[i];
 
         printf(
-            "ID: %-4d | Status: %-8s | Description: %s",
+            "ID: %-4d | Status: %-8s | Description: %s \n",
             task.id,
             task.completed ? "COMPLETE" : "PENDING",
             task.description
@@ -165,7 +165,7 @@ void save_task_storage(const char* filename) {
     }
 
     for(int i = 0; i < task_count; i++) {
-        fprintf(file, "%d,%d,%s\n",
+        fprintf(file, "%d;%d;%s\n",
             tasks[i].id,
             tasks[i].completed ? 1 : 0,
             tasks[i].description
@@ -174,4 +174,59 @@ void save_task_storage(const char* filename) {
 
     fclose(file);
 
+}
+
+void load_task_storage(const char* filename) {
+
+    FILE* file = fopen(filename, "r");
+    if(file == NULL) {
+        printf("Error: couldn't opne file for writing");
+        return;
+    }
+
+    free_task_list();
+    initialize_task_list((int)INITIAL_CAPACITY);
+
+    char line[MAX_DESCRIPTION_LENGTH + 50];
+    int loaded_id, loaded_completed;
+    char loaded_desc[MAX_DESCRIPTION_LENGTH];
+    int max_id_found = 0;
+
+    while (fgets(line, sizeof(line), file) != NULL)
+    {
+        char* first_semi = strchr(line, ';');
+        if(first_semi == NULL) {
+            fprintf(stderr, "Warning: Skipping malformed line in file (missing fist ';'): %s\n", line);
+            continue;
+        }
+        *first_semi = '\0';
+        loaded_id = atoi(line);
+
+        char* second_semi = strchr(first_semi + 1, ';');
+        if(second_semi == NULL) {
+            fprintf(stderr, "Warning: Skipping malformed line in file (missing second ';'): %s\n", line);
+            continue;
+        }
+        *second_semi = '\0';
+        loaded_completed = atoi(first_semi + 1);
+
+        // Get the desc part and remove trailing newline
+        strncpy(loaded_desc, second_semi + 1, sizeof(loaded_desc) - 1);
+        loaded_desc[sizeof(loaded_desc) - 1] = '\0';
+        loaded_desc[strcspn(loaded_desc, "\n")] = 0;
+
+        ensure_capacity(); // Ensure enough space for the new Task item
+
+        tasks[task_count].id = loaded_id;
+        strcpy(tasks[task_count].description, loaded_desc);
+        tasks[task_count].completed = loaded_completed == 1;
+        task_count++;
+
+        if(loaded_id >= max_id_found) max_id_found = loaded_id;
+    }
+
+    next_id = max_id_found + 1;
+
+    fclose(file);
+    printf("Info: Loaded %d task from '%s'.\n", task_count, filename);
 }

@@ -2,13 +2,13 @@
 #include <string.h>
 #include "task.h"
 
-#define INITIAL_CAPACITY 2
+const char* filename = "todo_task.txt";
 
 int main() {
 
     initialize_task_list((int)INITIAL_CAPACITY);
 
-    save_task_storage("todo_task.txt");
+    load_task_storage(filename);
 
     char temp_desc[MAX_DESCRIPTION_LENGTH];
     int temp_id;
@@ -66,6 +66,10 @@ int main() {
 
             while (getchar() != '\n');
             delete_task(temp_id);
+            break;
+        case 5:
+            save_task_storage(filename);
+            printf("Success: Task saved in %s \n", filename);
             break;
         case 6:
             printf("Exiting application.");

@@ -1,5 +1,6 @@
 
 #define MAX_DESCRIPTION_LENGTH 256
+#define INITIAL_CAPACITY 2
 
 void initialize_task_list(int);
 
@@ -14,3 +15,5 @@ void complete_task(int);
 void delete_task(int);
 
 void save_task_storage(const char*);
+
+void load_task_storage(const char*);
