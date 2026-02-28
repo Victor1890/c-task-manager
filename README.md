@@ -40,6 +40,8 @@ Folder Structure
 ├─ README.md
 └─ src/
 	└─ main.c
+	└─ task.c
+	└─ task.h
 ```
 
 How to Compile and Run (GCC on Windows)
@@ -60,15 +62,14 @@ Steps:
 Example Terminal Menu
 ------------------------------------------------------------
 ```
-Todo CLI (todo-cli-c)
----------------------
-1) Add Task
-2) List Tasks
-3) Mark Task Completed
-4) Delete Task
-5) Save & Exit
-
-Select an option:
+To-Do List Application
+1. Add Task
+2. View Tasks
+3. Mark Task as Completed
+4. Delete Task
+5. Save Task in Disk
+6. Exit
+Enter your choice:
 ```
 
 Future Improvements
